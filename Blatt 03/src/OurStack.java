@@ -32,7 +32,10 @@ public class OurStack {
   }
 
   public void push() {
-    if(currentSize < stack.length){ //currentSize und stack.length sind beide +1 verschoben zur realen Position. <, da mindestens ein Platz noch frei sein muss.
+    if (stack == null) {
+      SimpleIO.output("Bitte erst Länge des Stacks definieren.");
+    }
+    else if(currentSize < stack.length){ //currentSize und stack.length sind beide +1 verschoben zur realen Position. <, da mindestens ein Platz noch frei sein muss.
       stack[currentSize] = SimpleIO.getString("Geben Sie ein zu speicherndes Element ein: ");
       //Da Stack immer von links nach rechts aufgefüllt wird und currentSize ein Element weiter liegt als das letzte Element, lässt sich do die push-Methode implementieren
       currentSize = currentSize + 1;
@@ -53,15 +56,13 @@ public class OurStack {
   public void clear() {
     int laengeStack = stack.length;
     stack = new String[laengeStack-1];
+    currentSize = 0;
   }
 
   public void setSize(int size) {
-    if (size >= currentSize) { //Wenn der neue Stack größer ist als der alte: Alle Elemente können übernommen werden
+    if (size > currentSize) { //Wenn der neue Stack größer ist als der alte: Alle Elemente können übernommen werden
       if (currentSize != 0) {
-        String[] help = new String[currentSize]; //Es wird ein Hilfsstack erzeugt
-        for (int i = 0; i < currentSize; i++) { //Kopieren, um Inhalt bei redefinition des Hauptstacks nicht zu verlieren
-          help[i] = stack[i];
-        }
+        String[] help = stack;
         stack = new String[size]; //Setzen der neuen Größe
         for (int i = 0; i < help.length; i++) { //Einsetzen des neuen Stacks
           stack[i] = help[i];
@@ -72,6 +73,9 @@ public class OurStack {
         stack = new String[size];
         //currentSize bleibt in diesem Falle 0, wie es auch bereits zuvor war.
       }
+    }
+    else if (size == currentSize){ //Wenn size == currentSize, muss am Stack nichts verändert werden. Dann kann das Programm abbrechen.
+        return;
     }
     else { //Wenn der alte Stack größer war als der neue: Nur so viele Elemente, wie in den Stack hineinpassen, werden kopiert
       String[] help = new String[size]; //Es wird ein Hilfsstack erzeugt
