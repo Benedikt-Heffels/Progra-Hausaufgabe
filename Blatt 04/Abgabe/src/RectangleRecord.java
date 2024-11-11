@@ -1,6 +1,29 @@
 public record RectangleRecord(int x, int y, int width, int height) {
 
     /**
+     * Constructor creating new Rectangle and setting coordinates of upper left corner as well as width and height
+     * @param x x-coordinate of upper left corner of the Rectangle
+     * @param y y-coordinate of upper left corner of the Rectangle
+     * @param width not-negative width of the Rectangle
+     * @param height not-negative height of the Rectangle
+     */
+    public RectangleRecord(int x, int y, int width, int height){
+        if(width < 0 || height < 0) {
+            Utils.error("Error: Höhe und Breite duerfen nicht negativ sein!");
+            this.x = 0;
+            this.y = 0;
+            this.width = 0;
+            this.height = 0;
+        }
+        else {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+        }
+    }
+
+    /**
      * Copies an existing rectangle as a new instance, by creating a new rectangle with the same attribute values
      * @param toCopy Rectangle create a copy of
      * @return The copied Rectangle
