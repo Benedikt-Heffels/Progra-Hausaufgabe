@@ -1,4 +1,9 @@
-import jdk.jshell.execution.Util;
+/*
+@ToDo:
+- Rectangle copy method - DONE
+- Intersection of two
+- Records-Klasse
+ */
 
 public class Rectangle {
     private int x;
@@ -36,8 +41,14 @@ public class Rectangle {
         new Rectangle(xInput, yInput, sidelengthInput, sidelengthInput); //Zugriff auf Konstruktor für Standard-Rectangle: Vereinfachte Deklaration
     }
 
-    public Rectangle (Rectangle toCopy) {
-        new Rectangle(toCopy.getX(), toCopy.getY(), toCopy.getWidth(), toCopy.getHeight());
+
+    /**
+     * Statische Methode, um ein Rectangle zu kopieren
+     * @param toCopy das zu kopierende Rectangle
+     * @return das kopierte Rectangle
+     */
+    public static Rectangle copy (Rectangle toCopy) {
+        return new Rectangle(toCopy.getX(), toCopy.getY(), toCopy.getWidth(), toCopy.getHeight());
     }
 
 
@@ -146,26 +157,28 @@ public class Rectangle {
      * @param rectangle2 Rechteck 2
      * @return Rechteck, falls ein Rechteck existiert, das beide schneidet. Sonst null.
      */
-    private Rectangle intersectionOfTwo(Rectangle rectangle1, Rectangle rectangle2) {
+    private static Rectangle intersectionOfTwo(Rectangle rectangle1, Rectangle rectangle2) {
         //Ein neues Rechteck besteht aus x,y, Breite, Höhe
-        int minX = Utils.min(rectangle1.getX(), rectangle2.getX());
-        if (!(minX <= rectangle1.getX() + rectangle1.getWidth() && minX <= rectangle2.getX() + rectangle2.getWidth())) {
+        //int minX = Utils.min(rectangle1.getX(), rectangle2.getX()); //Benötigt für Vergleichsrechnung am Ende
+        int maxX = Utils.max(rectangle1.getX(), rectangle2.getX());
+        if (!(maxX <= rectangle1.getX() + rectangle1.getWidth() && maxX <= rectangle2.getX() + rectangle2.getWidth())) { //x-Koordinate ist immer der linkeste Punkt
             return null; //Dann gibt es keine x-Koordinate für die obere linke Ecke, die in beiden Rechtecken liegt.
         }
-        int minY = Utils.min(rectangle1.getY(), rectangle2.getY());
-        if (!(minY <= rectangle1.getY() + rectangle1.getHeight() && minY <= rectangle2.getY() + rectangle2.getHeight())) {
+        //int minY = Utils.min(rectangle1.getY(), rectangle2.getY()); //Benötigt für Vergleichsrechnung am Ende
+        int maxY = Utils.max(rectangle1.getY(), rectangle2.getY());
+        if (!(maxY <= rectangle1.getY() + rectangle1.getHeight() && maxY <= rectangle2.getY() + rectangle2.getHeight())) {
             return null; //Dann gibt es keine y-Koordinate für die obere linke Ecke, die in beiden Rechtecken liegt.
         }
         int minXWidth = Utils.min((rectangle1.getX() + rectangle1.getWidth()), (rectangle2.getX() + rectangle2.getWidth()));
         //minXWidth ist die maximal entfernteste Position auf der x-Achse. Die maximale Breite erhält man dann aus der Subtraktion minXWidth-minX.
-        if (! (minX > minXWidth)){
+        if ((maxX > minXWidth)){
             return null;
         }
         int minYHeight = Utils.min((rectangle1.getY() + rectangle1.getHeight()), (rectangle2.getY() + rectangle2.getHeight()));
-        if (! (minY > minYHeight)){
+        if ((maxY > minYHeight)){
             return null;
         }
-        return new Rectangle(minX, minY, minXWidth-minX, minYHeight-minYHeight);
+        return new Rectangle(maxX, maxY, minXWidth-maxX, minYHeight-maxY);
     }
 
     /**
@@ -173,15 +186,16 @@ public class Rectangle {
      * @param rectangles var args von Rechtecken
      * @return Rechteck, falls es ein Rechteck gibt, dass alle anderen Rechtecke schneidet. Sonst null.
      */
-    public Rectangle intersection( Rectangle... rectangles ){
+    public static Rectangle intersection( Rectangle... rectangles ){
         //Die Methode intersection(Rectangle... rectangles) gibt das größte Rechteck zurück, das vollständig in allen als Argument übergebenen Rechtecken enthalten ist.
         // Wenn rectangles leer ist, soll null zurückgegeben werden.
         // Falls der Schnitt der Rechtecke leer ist, soll ebenfalls null zurückgegeben werden
         if (rectangles == null || rectangles.length == 0) {
             return null;
         }
-        Rectangle schnittRectangle = new Rectangle(rectangles[0]);
+        Rectangle schnittRectangle = Rectangle.copy(rectangles[0]);
         for (Rectangle rectangle : rectangles) {
+            System.out.println(schnittRectangle);
              schnittRectangle = intersectionOfTwo(schnittRectangle, rectangle);
              if (schnittRectangle == null) {
                  return null;
@@ -200,7 +214,7 @@ public class Rectangle {
         //obere linke Ecke
         ausgabe += "(" + this.x + "|" + this.y + "), ";
         // untere linke Ecke
-        ausgabe += "(" + this.x + "|" + (this.y - this.height) + "), ";
+        ausgabe += "(" + this.x + "|" + (this.y - this.height) + "), "; //Minus, das (x|y) odere linke Ecke bezeichnet -> untere linke Ecke dementsprechend y-height
         // untere rechte Ecke
         ausgabe += "(" + (this.x + this.width) + "|" + (this.y - this.height) + "), ";
         //obere rechte Ecke
