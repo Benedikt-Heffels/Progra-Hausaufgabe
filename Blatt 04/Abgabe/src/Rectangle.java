@@ -1,27 +1,20 @@
-/*
-@ToDo:
-- Rectangle copy method - DONE
-- Intersection of two
-- Records-Klasse
+/**
+ * Class for creating and managing Rectangles (s. Aufgabe)
  */
-
 public class Rectangle {
-    private int x;
-    private int y;
-    private int width;
-    private int height;
+
+    private int x,y,width,height;
 
     /**
-     * Konstruktor für ein Rechteck
-     * @param xInput x-Koordinate der oberen linken Ecke des Rechtecks als int
-     * @param yInput x-Koordinate der oberen linken Ecke des Rechtecks als int
-     * @param widthInput nicht-negative Breite des Rechtecks als int
-     * @param heightInput nicht-negative Höhe des Rechtecks als int
-     * @return das erstellte Rechteck
+     * Constructor creating new Rectangle and setting coordinates of upper left corner as well as width and height
+     * @param xInput x-coordinate of upper left corner of the Rectangle
+     * @param yInput y-coordinate of upper left corner of the Rectangle
+     * @param widthInput not-negative width of the Rectangle
+     * @param heightInput not-negative height of the Rectangle
      */
-    public Rectangle (int xInput , int yInput , int widthInput , int heightInput) {
-        if (heightInput < 0 || widthInput < 0) { //Fehler, falls Höhe und/oder Breite negativ sind
-            Utils.error("Höhe und Breite dürfen nicht negativ sein!");
+    public Rectangle(int xInput, int yInput, int widthInput, int heightInput) {
+        if(widthInput < 0 || heightInput < 0) {
+            Utils.error("Error: Höhe und Breite duerfen nicht negativ sein!");
             return;
         }
         this.x = xInput;
@@ -31,195 +24,178 @@ public class Rectangle {
     }
 
     /**
-     * Konstruktor für ein Quadrat
-     * @param xInput x-Koordinate der oberen linken Ecke des Quadrats als int
-     * @param yInput y-Koordinate der oberen linken Ecke des Quadrats als int
-     * @param sidelengthInput nicht-negative Seitenlänge des Quadrats als int
-     * @return das erstellte Rechteck
+     * Constructor creating a new Square (Rectangle) by setting coordinates of upper left corner as well as the side length
+     * @param xInput x-coordinate of upper left corner of the Rectangle
+     * @param yInput y-coordinate of upper left corner of the Rectangle
+     * @param sidelengthInput not-negative side length of the Square (Rectangle)
      */
-    public Rectangle (int xInput , int yInput , int sidelengthInput) {
-        new Rectangle(xInput, yInput, sidelengthInput, sidelengthInput); //Zugriff auf Konstruktor für Standard-Rectangle: Vereinfachte Deklaration
-    }
-
-
-    /**
-     * Statische Methode, um ein Rectangle zu kopieren
-     * @param toCopy das zu kopierende Rectangle
-     * @return das kopierte Rectangle
-     */
-    public static Rectangle copy (Rectangle toCopy) {
-        return new Rectangle(toCopy.getX(), toCopy.getY(), toCopy.getWidth(), toCopy.getHeight());
-    }
-
-
-    //----- Selektoren --------
-
-    /**
-     * Gibt die x-Koorinate der oberen linken Ecke des Rechtecks zurück
-     * @return x-Koordinate der oberen linken Ecke des Rechtecks als int
-     */
-    public int getX(){
-        return this.x;
+    public Rectangle(int xInput, int yInput, int sidelengthInput) {
+        this(xInput,yInput,sidelengthInput,sidelengthInput);
     }
 
     /**
-     * Gibt die y-Koorinate der oberen linken Ecke des Rechtecks zurück
-     * @return y-Koordinate der oberen linken Ecke des Rechtecks als int
+     * Copies an existing rectangle as a new instance, by creating a new rectangle with the same attribute values
+     * @param toCopy Rectangle create a copy of
+     * @return The copied Rectangle
      */
-    public int getY(){
-        return this.y;
+    public static Rectangle copy(Rectangle toCopy) {
+        return new Rectangle(toCopy.x,toCopy.y,toCopy.width,toCopy.height);
     }
 
     /**
-     * Gibt die nicht-negative Breite des Rechtecks zurück
-     * @return Breite des Rechtecks als int
+     * Getter for the x-coordinate of the upper left corner of the Rectangle
+     * @return x-coordinate of the Rectangle
      */
-    public int getWidth(){
-        return this.width;
+    public int getX() {
+        return x;
     }
 
     /**
-     * Gibt die nicht-negative Höhe des Rechtecks zurück
-     * @return Höhe des Rechtecks als int
+     * Setter for the x-coordinate of the upper left corner of the Rectangle
+     * @param x value to set the x-coordinate of the upper left corner of the Rectangle to
      */
-    public int getHeight(){
-        return this.height;
+    public void setX(int x) {
+        this.x = x;
     }
 
     /**
-     * Ändert die x-Koordinate der oberen linken Ecke des Rechtecks
-     * @param xInput neue x-Koordinate für die obere linke Ecke des Rechtecks als int
+     * Getter for the y-coordinate of the upper left corner of the Rectangle
+     * @return y-coordinate of the Rectangle
      */
-    public void setX(int xInput){
-        this.x = xInput;
+    public int getY() {
+        return y;
     }
 
     /**
-     * Ändert die y-Koordinate der oberen linken Ecke des Rechtecks
-     * @param yInput neue y-Koordinate für die obere linke Ecke des Rechtecks als int
+     * Setter for the y-coordinate of the upper left corner of the Rectangle
+     * @param y value to set the y-coordinate of the upper left corner of the Rectangle to
      */
-    public void setY(int yInput){
-        this.y = yInput;
+    public void setY(int y) {
+        this.y = y;
     }
 
     /**
-     * Ändert die Breite des Rechtecks
-     * @param widthInput neue nicht-negative Breite des Rechtecks als int
+     * Getter for the width of the Rectangle
+     * @return width of the Rectangle
      */
-    public void setWidth(int widthInput){
-        if (widthInput < 0) {
-            Utils.error("Die Breite des Reechtecks darf nicht negativ sein");
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     * Setter for the width of the Rectangle
+     * @param width not-negative value to set the width of the Rectangle to
+     */
+    public void setWidth(int width) {
+        if(width < 0){
+            Utils.error("Error: Breite darf nicht negativ sein!");
             return;
         }
-        this.width = widthInput;
+        this.width = width;
     }
 
     /**
-     * Ändert die Höhe des Rechtecks
-     * @param heightInput neue nicht-negative Höhe des Rechteks als int
+     * Getter for the height of the Rectangle
+     * @return height of the Rectangle
      */
-    public void setHeight(int heightInput){
-        if (heightInput < 0) {
-            Utils.error("Die Höhe des Rechtecks darf nicht negativ sein");
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * Setter for the height of the Rectangle
+     * @param height not-negative value to set the height of the Rectangle to
+     */
+    public void setHeight(int height) {
+        if(height < 0){
+            Utils.error("Error: Höhe darf nicht negativ sein!");
             return;
         }
-        this.height = heightInput;
+        this.height = height;
     }
 
-
-    //-------- Methoden ---------
-
     /**
-     * Überprüft, ob alle Rechtecke eines var arg auch Quadrate sind
-     * @param rectangles var arg bestehend aus beliebig vielen Rechtecken
-     * @return true, falls alle Rechtecke aus rectangles Quadrate sind; false, falls mindestens ein Rechteck kein Quadrat ist
+     * Static method that checks whether the given rectangles are all Squares
+     * @param rectangles var arg array for any number of Rectangles to check
+     * @return true if all Rectangles are Squares, otherwise false
      */
-    public static boolean areSquares (Rectangle ... rectangles){
-        for(Rectangle rectangletocheck : rectangles){
-            if (rectangletocheck.getWidth() != rectangletocheck.getHeight()){
-                return false;
+    public static boolean areSquares(Rectangle... rectangles){
+        for(Rectangle rectangle : rectangles){
+            if(rectangle.getWidth() != rectangle.getHeight()){
+               return false;
             }
         }
         return true;
     }
 
     /**
-     * Berechnet den Flächeninhalt eines Rechtecks
-     * @return Flächeninhalt des Rechtecks als int
+     * Returns the area of the Rectangle it is called on
+      * @return area in unit of coordinate system squared
      */
-    public int area () {
-        return this.width * this.height;
+    public int area(){
+        return width*height;
     }
 
     /**
-     * Private Methode, die den Schnitt zweier Rechtecke bestimmt.
-     * @param rectangle1 Rechteck 1
-     * @param rectangle2 Rechteck 2
-     * @return Rechteck, falls ein Rechteck existiert, das beide schneidet. Sonst null.
+     * Static method that returns the largest possible Rectangle that lies in the intersection of every rectangle
+     * @param rectangles VARARG array for any number of Rectangles to intersect
+     * @return returns the intersection Rectangle, returns null if the intersection area is empty or there are no given Rectangles as parameters
      */
-    private static Rectangle intersectionOfTwo(Rectangle rectangle1, Rectangle rectangle2) {
-        //Ein neues Rechteck besteht aus x,y, Breite, Höhe
-        //int minX = Utils.min(rectangle1.getX(), rectangle2.getX()); //Benötigt für Vergleichsrechnung am Ende
-        int maxX = Utils.max(rectangle1.getX(), rectangle2.getX());
-        if (!(maxX <= rectangle1.getX() + rectangle1.getWidth() && maxX <= rectangle2.getX() + rectangle2.getWidth())) { //x-Koordinate ist immer der linkeste Punkt
-            return null; //Dann gibt es keine x-Koordinate für die obere linke Ecke, die in beiden Rechtecken liegt.
-        }
-        //int minY = Utils.min(rectangle1.getY(), rectangle2.getY()); //Benötigt für Vergleichsrechnung am Ende
-        int maxY = Utils.max(rectangle1.getY(), rectangle2.getY());
-        if (!(maxY <= rectangle1.getY() + rectangle1.getHeight() && maxY <= rectangle2.getY() + rectangle2.getHeight())) {
-            return null; //Dann gibt es keine y-Koordinate für die obere linke Ecke, die in beiden Rechtecken liegt.
-        }
-        int minXWidth = Utils.min((rectangle1.getX() + rectangle1.getWidth()), (rectangle2.getX() + rectangle2.getWidth()));
-        //minXWidth ist die maximal entfernteste Position auf der x-Achse. Die maximale Breite erhält man dann aus der Subtraktion minXWidth-minX.
-        if ((maxX > minXWidth)){
+    public static Rectangle intersection(Rectangle... rectangles){
+        if(rectangles.length == 0){
             return null;
         }
-        int minYHeight = Utils.min((rectangle1.getY() + rectangle1.getHeight()), (rectangle2.getY() + rectangle2.getHeight()));
-        if ((maxY > minYHeight)){
-            return null;
+        Rectangle intersection = rectangles[0];
+        for(Rectangle rectangle : rectangles){
+            intersection = intersectTwo(intersection, rectangle);
+            if(intersection == null) return null;
         }
-        return new Rectangle(maxX, maxY, minXWidth-maxX, minYHeight-maxY);
+        return intersection;
     }
 
     /**
-     * Bestimmt ein Rechteck, welches eine Liste von übergebenen Rechtecken schneidet.
-     * @param rectangles var args von Rechtecken
-     * @return Rechteck, falls es ein Rechteck gibt, dass alle anderen Rechtecke schneidet. Sonst null.
+     * Private method that checks whether the Rectangle r contains the Coordinate Point (x|y)
+     * @param r Rectangle
+     * @param x x-Coordinate of the point
+     * @param y y-Coordinate of the point
+     * @return true, if point lies in rectangle, else false
      */
-    public static Rectangle intersection( Rectangle... rectangles ){
-        //Die Methode intersection(Rectangle... rectangles) gibt das größte Rechteck zurück, das vollständig in allen als Argument übergebenen Rechtecken enthalten ist.
-        // Wenn rectangles leer ist, soll null zurückgegeben werden.
-        // Falls der Schnitt der Rechtecke leer ist, soll ebenfalls null zurückgegeben werden
-        if (rectangles == null || rectangles.length == 0) {
-            return null;
+    private static boolean containsPoint(Rectangle r, int x, int y){
+        if((r.getX() <= x) && (r.getX() + r.getWidth() >= x) && (r.getY() >= y) && (r.getY() - r.getHeight() <= y)){
+            return true;
         }
-        Rectangle schnittRectangle = Rectangle.copy(rectangles[0]);
-        for (Rectangle rectangle : rectangles) {
-            System.out.println(schnittRectangle);
-             schnittRectangle = intersectionOfTwo(schnittRectangle, rectangle);
-             if (schnittRectangle == null) {
-                 return null;
-             }
-        }
-        return schnittRectangle;
+        return false;
     }
 
     /**
-     * Erzeugt eine textuelle Repräsentation des Rechtecks im Schema (x|y)-Koordinate beginnend bei der oberen, linken Ecke gegen den Uhrzeigersinn
-     * @return textuelle Repräsentation des Rechtecks (als String)
+     * Static method that returns the intersection of two Rectangles
+     * @param r1 Rectangle 1
+     * @param r2 Rectangle 2
+     * @return returns the intersection Rectangle, returns null if the intersection area is empty or there are no given Rectangles as parameters
+     */
+    private static Rectangle intersectTwo(Rectangle r1, Rectangle r2) {
+
+        int x = Utils.max(r1.getX(), r2.getX());
+        int y = Utils.min(r1.getY(), r2.getY());
+        int dlCornerY = Utils.max(r1.getY() - r1.getHeight(), r2.getY() - r2.getHeight());
+        int height = Utils.max(dlCornerY, y) - Utils.min(dlCornerY, y);
+        int dlCornerX = Utils.min(r1.getX() + r1.getWidth(), r2.getX() + r2.getWidth());
+        int width = Utils.max(dlCornerX, x) - Utils.min(dlCornerX, x);
+
+        if (!Rectangle.containsPoint(r1, x, y) || !Rectangle.containsPoint(r2, x, y)) {
+            return null;
+        }
+
+        return new Rectangle(x, y, width, height);
+    }
+
+    /**
+     * Returns the coordinates of all corners of the Rectangle anticlockwise, beginning with the upper left corner
+     * @return returns coordinates of all four corners in the pattern (x|y),...
      */
     public String toString(){
-        //String-Form: obere linke Ecke - untere linke Ecke - untere rechte Ecke - obere rechte Ecke
-        String ausgabe = "";
-        //obere linke Ecke
-        ausgabe += "(" + this.x + "|" + this.y + "), ";
-        // untere linke Ecke
-        ausgabe += "(" + this.x + "|" + (this.y - this.height) + "), "; //Minus, das (x|y) odere linke Ecke bezeichnet -> untere linke Ecke dementsprechend y-height
-        // untere rechte Ecke
-        ausgabe += "(" + (this.x + this.width) + "|" + (this.y - this.height) + "), ";
-        //obere rechte Ecke
-        ausgabe += "(" + (this.x + this.width) + "|" + this.y + ")";
-        return ausgabe;
+        return "(" + this.x + "|" + this.y + "),(" + this.x + "|" + (this.y-this.height) + "),(" + (this.x+this.width) + "|" + (this.y-this.height) + "),(" + (this.x+this.width) + "|" + this.y + ")";
     }
+
 
 }
