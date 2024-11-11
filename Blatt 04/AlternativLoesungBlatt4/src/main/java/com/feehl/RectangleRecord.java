@@ -42,9 +42,6 @@ public record RectangleRecord(int x, int y, int width, int height) {
             if(intersectTwo(intersection, RectangleRecord) == null) return null;
             intersection = intersectTwo(intersection, RectangleRecord);
         }
-        if(intersection.area() == 0){
-            return null;
-        }
         return intersection;
     }
 
@@ -82,4 +79,8 @@ public record RectangleRecord(int x, int y, int width, int height) {
     public String toString() {
         return "(" + x + "|" + y + "),(" + x + "|" + (y-height) + "),(" + (x+width) + "|" + (y-height) + "),(" + (x+width) + "|" + y + ")";
     }
+
+
+
+
 }

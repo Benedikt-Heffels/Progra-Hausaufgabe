@@ -1,5 +1,7 @@
 package com.feehl;
 
+import java.util.Objects;
+
 /**
  * Class for creating and managing Rectangles (s. Aufgabe)
  */
@@ -149,23 +151,21 @@ public class Rectangle {
         }
         Rectangle intersection = rectangles[0];
         for(Rectangle rectangle : rectangles){
-            if(intersectTwo(intersection, rectangle) == null) return null;
             intersection = intersectTwo(intersection, rectangle);
-        }
-        if(intersection.area() == 0){
-            return null;
+            if(intersection == null) return null;
         }
         return intersection;
     }
 
     //returns whether the Rectangle r contains the Coordinate Point (x|y)
     private static boolean containsPoint(Rectangle r, int x, int y){
-        if((r.getX() <= x) && (r.getX() + r.getWidth() >= x) && (r.getY() >= y) && (r.getY() - r.getWidth() <= y)){
+        if((r.getX() <= x) && (r.getX() + r.getWidth() >= x) && (r.getY() >= y) && (r.getY() - r.getHeight() <= y)){
             return true;
         }
         return false;
     }
 
+    //suggested helper method to intersect 2 rectangles
     private static Rectangle intersectTwo(Rectangle r1, Rectangle r2){
 
         int x = Utils.max(r1.getX(), r2.getX());
@@ -201,7 +201,7 @@ public class Rectangle {
      * @return null falls eins der Rechtecke null ist,
      * oder der schnitt der Rechtecke leer ist, sonst der Schnitt $
      */
-    private static Rectangle intersectionR2(Rectangle r1, Rectangle r2) {
+    public static Rectangle intersectionR2(Rectangle r1, Rectangle r2) {
         if (r1 == null || r2 == null) return null;
 
         int x_topleft = Utils.max(r1.x, r2.x);
@@ -222,9 +222,10 @@ public class Rectangle {
         if (rectangles.length == 0) return null;
 
         Rectangle ret = rectangles[0];
-        for (int i = 1; i < rectangles.length - 1; i++) {
+        for (int i = 0; i < rectangles.length - 1; i++) {
+            ret = Rectangle.intersectionR2(ret, rectangles[i+1]);
+
             if (ret == null) return null;
-            ret = Rectangle.intersectionR2(rectangles[i], rectangles[i+1]);
         }
 
         return ret;
@@ -298,9 +299,39 @@ public class Rectangle {
      * Returns the coordinates of all corners of the Rectangle anticlockwise, beginning with the upper left corner
      * @return returns coordinates of all four corners in the pattern (x|y),...
      */
+    @Override
     public String toString(){
         return "(" + x + "|" + y + "),(" + x + "|" + (y-height) + "),(" + (x+width) + "|" + (y-height) + "),(" + (x+width) + "|" + y + ")";
     }
 
 
+    //
+    //
+    //
+    //
+    //
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rectangle rectangle = (Rectangle) o;
+        return x == rectangle.x && y == rectangle.y && width == rectangle.width && height == rectangle.height;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y, width, height);
+    }
+
+    public String toString_() {
+        return "Rectangle{" +
+                "x=" + x +
+                ", y=" + y +
+                ", width=" + width +
+                ", height=" + height +
+                '}';
+    }
 }
