@@ -108,12 +108,12 @@ public record RectangleRecord(int x, int y, int width, int height) {
         return new RectangleRecord(x, y, width, height);
     }
 
-//    @Override
-//    /**
-//     * Returns the coordinates of all corners of the Rectangle anticlockwise, beginning with the upper left corner
-//     * @return returns coordinates of all four corners in the pattern (x|y),...
-//     */
-//    public String toString() {
-//        return "(" + x + "|" + y + "),(" + x + "|" + (y-height) + "),(" + (x+width) + "|" + (y-height) + "),(" + (x+width) + "|" + y + ")";
-//    }
+    @Override
+    /**
+     * Returns the coordinates of all corners of the Rectangle anticlockwise, beginning with the upper left corner
+     * @return returns coordinates of all four corners in the pattern (x|y),...
+     */
+    public String toString() {
+        return "(" + x + "|" + y + "),(" + x + "|" + (y-height) + "),(" + (x+width) + "|" + (y-height) + "),(" + (x+width) + "|" + y + ")";
+    }
 }
