@@ -3,9 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Blatt 04/Abgabe/Abgabe.iml" filepath="$PROJECT_DIR$/Blatt 04/Abgabe/Abgabe.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Blatt 05/Ben/Ben.iml" filepath="$PROJECT_DIR$/Blatt 05/Ben/Ben.iml" />
       <module fileurl="file://$PROJECT_DIR$/Blatt 02/Blatt 02.iml" filepath="$PROJECT_DIR$/Blatt 02/Blatt 02.iml" />
       <module fileurl="file://$PROJECT_DIR$/Blatt 03/Blatt 03.iml" filepath="$PROJECT_DIR$/Blatt 03/Blatt 03.iml" />
       <module fileurl="file://$PROJECT_DIR$/Blatt 04/Blatt 04.iml" filepath="$PROJECT_DIR$/Blatt 04/Blatt 04.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Blatt 05/Blatt 05.iml" filepath="$PROJECT_DIR$/Blatt 05/Blatt 05.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Blatt 05/Phil/Phil.iml" filepath="$PROJECT_DIR$/Blatt 05/Phil/Phil.iml" />
       <module fileurl="file://$PROJECT_DIR$/Progra Hausaufgabe.iml" filepath="$PROJECT_DIR$/Progra Hausaufgabe.iml" />
     </modules>
   </component>
