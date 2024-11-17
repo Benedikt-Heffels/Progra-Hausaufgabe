@@ -197,5 +197,47 @@ public class Rectangle {
         return "(" + this.x + "|" + this.y + "),(" + this.x + "|" + (this.y-this.height) + "),(" + (this.x+this.width) + "|" + (this.y-this.height) + "),(" + (this.x+this.width) + "|" + this.y + ")";
     }
 
+    //Oskar
+    //Oskar
+    //Oskar
+    //Oskar
+    //Oskar
+    /**
+     * Hilfsmethode, die den Schnitt zweier Rechteck berechnet.
+     * @implNote Diese Methode hat package-Sichtbarkeit, damit automatische Tests funktionieren
+     * @param r1 das erste Rechteck
+     * @param r2 das zweite Rechteck
+     * @return null falls eins der Rechtecke null ist,
+     * oder der schnitt der Rechtecke leer ist, sonst der Schnitt $
+     */
+    public static Rectangle intersectionR2(Rectangle r1, Rectangle r2) {
+        if (r1 == null || r2 == null) return null;
+
+        int x_topleft = Utils.max(r1.x, r2.x);
+        int y_topleft = Utils.min(r1.y, r2.y); //awt max
+
+        int x_bottomright = Utils.min(r1.x + r1.width, r2.x + r2.width);
+        int y_bottomright = Utils.max(r1.y - r1.height, r2.y - r2.height); //awt min
+
+        int width = x_bottomright - x_topleft;
+        int heigth = y_topleft - y_bottomright;
+
+        if (width < 0 || heigth < 0) return null;
+
+        return new Rectangle(x_topleft, y_topleft, width, heigth);
+    }
+
+    public static Rectangle intersectionOskar(Rectangle... rectangles) {
+        if (rectangles.length == 0) return null;
+
+        Rectangle ret = rectangles[0];
+        for (int i = 0; i < rectangles.length - 1; i++) {
+            ret = Rectangle.intersectionR2(ret, rectangles[i+1]);
+
+            if (ret == null) return null;
+        }
+
+        return ret;
+    }
 
 }
