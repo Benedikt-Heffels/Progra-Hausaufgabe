@@ -36,6 +36,7 @@ public class AdaptiveList {
     }
 
     public boolean isLast() {
+        //@TODO: Sollte private sein?
         //return für einelementige Liste true, falls das aufrufende Objekt das letzte ELement ist, sonst false
         if (this.getNext() == null) { //Die AdaptiveList (die einelementige Liste) ist das letzte Element, wenn das nächste Element (getNext) null ist
             return true;
@@ -43,14 +44,14 @@ public class AdaptiveList {
         return false;
     }
 
-    //@TODO: Aufruf über Liste mit mehreren Elementen?
-
     public AdaptiveList prepend(int value) {
-        return new AdaptiveList(value, this); //gibt ein neues AdaptiveList Element zurück, dessen value der übergebene value ist. Next ist this als aufrufendes Element, sodass die neue AdaptiveList am Anfang der Liste steht
-        //@TODO Ganze alte Liste im Anschluss zurückgeben - ist das nicht in next drin?
+        return new AdaptiveList(value, this); //gibt ein neues AdaptiveList Element zurück, dessen value der übergebene value ist. Next ist this als aufrufendes Element (erstes Element der alten Liste), sodass die neue AdaptiveList am Anfang der Liste steht
+        /*Das reutrn-Statement gibt die ganze Liste zurück, mit dem neuen Element als erstem Element. Das geschiet über next = this. (testes)
+        */
     }
 
     public AdaptiveList append(int value) {
+        //Erweitert die Liste hinten um den Wert value
         if (getNext() == null) {
             AdaptiveList newNext = new AdaptiveList(value, null); //next ist null, da am Ende eingefügt. Ansonsten wird ein neues Listenelement mit dem übergebenen Wert erzeugt
             this.setNext(newNext); //Vom aktuellen aufrufenden ELement aus gesehen soll das nächste Element das neu erstellte sein
@@ -59,8 +60,69 @@ public class AdaptiveList {
             this.getNext().append(value);
         }
         return this; //Zum Schluss soll das erste Element (aktuelle Element) zurückgegeben werden
-        //@TODO Ganze alte Liste im Anschluss zurückgeben - ist das nicht in next drin?
+        /*
+        Testing: Liste bleibt im Anschluss bestehen.
+         */
     }
+
+    public boolean contains(int value) {
+        //Methode funktioniert
+        //Methode soll zurückgeben, ob ein Wert value in einer Liste enthalten ist
+        if (this.isLast() && this.getValue() != value) {
+            return false; //Wenn es sich um das letzte Element handelt UND der Wert nicht gleich dem gesuchten Wert ist, gebe false zurück (sonst gäbe es Fehler bei den weiteren Prüfungen)
+        }
+        else if (this.getValue() == value) {
+            return true; //Falls das aktuelle Blatt diesen Wert hat, gebe true zurück / Mehrere Elemente mit selbenm Wert soll nicht betrachtet werden
+        }
+        return this.getNext().contains(value); //Sonst wiederhole die Methode mit dem nächsten Blatt.
+    }
+
+    public boolean containsAdaptive(int value) {
+        if (this.isLast()) {
+            return false; //Wenn es sich um das letzte Element handelt, gebe false zurück (sonst gäbe es Fehler bei den weiteren Prüfungen)
+        }
+        else if (this.getNext().getNext().getValue() == value) { //Prüft den Wert des übernächsten Blattes
+            AdaptiveList help = new AdaptiveList(value, this.getNext()); //Überführe den Wert in ein Hilfs-ELement
+            this.getNext().setNext(this.getNext().getNext().getNext()); //Für das nächste ELement wird das folgende Element als das über-übernächste ELement definiert (Ein Element wird übersprungen)
+            this.setNext(help); //Definiere nächstes Element als das Hilfs-Element
+            return true; //Gebe zurück, das Element enthalten ist.
+        }
+        else if (this.getNext().getValue() == value) { //Unabgedeckter Wert: Nächstes Element ist bereits das gesuchte Element (nur im ersten Aufruf möglich
+            //@TODO: Moving the element
+            //AdaptiveList help = new AdaptiveList(value, this);
+            this.setNext(this.getNext().getNext()); //Übernächstes Element wird als nächstes Element eingetragen
+            this.prepend(value);
+            return true;
+        } else if (this.getValue() == value) { //Sonderfall, nur beim ersten Aufruf möglich: Element ist direkt das gesuchte Element -> keine Vertauschung nötig
+            return true;
+        }
+        return this.getNext().containsAdaptive(value); //Wenn nicht enthalten: Führe das Verfahren mit dem nächsten Element fort
+    }
+
+    public boolean containsTopPriority(int value) {
+        if (this.isLast()) {
+            return false; //Wenn es sich um das letzte Element handelt, gebe false zurück (sonst gäbe es Fehler bei den weiteren Prüfungen)
+        }
+        else if (this.getNext().getValue() == value) {
+            //@TODO: Element nach ganz vorne
+            /*
+            Überlegung: prepend direkt nicht anwendbar, da Element nur eine Pos nach vorne verschieben würde
+             */
+            return true;
+        }
+        return this.getNext().containsTopPriority(value);
+    }
+
+    //Nicht in der HA gefordert - nur zur Vereinfachung
+
+    public String toString() {
+        if (this.isLast()) {
+            return this.getValue() + ". ";
+        }
+        return this.getValue() + " - " + this.getNext().toString();
+    }
+
+
 
 
 }
