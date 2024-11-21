@@ -4,7 +4,7 @@ public class AdaptiveList {
     //Jede Liste hat mindestens ein Element - leere Liste wird nicht betrachtet
     //Rekursion und MAX 1 SCHLEIFE erlaubt
     //Keine Hilfsmethoden oder Bibliotheksfunktionen
-    //Zugriffsmodifikatoren & static erklären
+    //Zugriffsmodifikatoren & static erklären - @TODO
 
     private int value;
     private AdaptiveList next;
@@ -78,6 +78,7 @@ public class AdaptiveList {
     }
 
     public boolean containsAdaptive(int value) {
+        //Methode funktioniert für alle getesteten Fälle erfolgreich
         if (this.isLast()) {
             return false; //Wenn es sich um das letzte Element handelt, gebe false zurück (sonst gäbe es Fehler bei den weiteren Prüfungen)
         }
@@ -88,10 +89,10 @@ public class AdaptiveList {
             return true; //Gebe zurück, das Element enthalten ist.
         }
         else if (this.getNext().getValue() == value) { //Unabgedeckter Wert: Nächstes Element ist bereits das gesuchte Element (nur im ersten Aufruf möglich
-            //@TODO: Moving the element
-            //AdaptiveList help = new AdaptiveList(value, this);
-            this.setNext(this.getNext().getNext()); //Übernächstes Element wird als nächstes Element eingetragen
-            this.prepend(value);
+            //Vorgehen: Erzeugen eines Hilfselements des aktuellen Elements, für aktuelles Element gesuchten Wert setzen und Wert des nächsten Elements durch Wert des Hilfselements ersetzen
+            AdaptiveList help = new AdaptiveList(this.getValue(), this.getNext());
+            this.setValue(value);
+            this.getNext().setValue(help.getValue());
             return true;
         } else if (this.getValue() == value) { //Sonderfall, nur beim ersten Aufruf möglich: Element ist direkt das gesuchte Element -> keine Vertauschung nötig
             return true;
@@ -100,22 +101,35 @@ public class AdaptiveList {
     }
 
     public boolean containsTopPriority(int value) {
-        if (this.isLast()) {
-            return false; //Wenn es sich um das letzte Element handelt, gebe false zurück (sonst gäbe es Fehler bei den weiteren Prüfungen)
+        if (!contains(value)) { //Wenn das Element gar nicht erst in der Liste enthalten ist, muss nicht weiter geprüft werden
+            return false;
         }
-        else if (this.getNext().getValue() == value) {
-            //@TODO: Element nach ganz vorne
-            /*
-            Überlegung: prepend direkt nicht anwendbar, da Element nur eine Pos nach vorne verschieben würde
-             */
-            return true;
+        //@TODO: Element nach ganz vorne bewegen
+        //Implementationsidee 1: Value überschreibt erstes Element, der Rest wird über eine Hilfsmethode angehängt
+//        AdaptiveList help = this;
+//        help = help.prepend(value);
+//        System.out.println("help: " + help);
+//        this.setValue(value);
+//        System.out.println(this);
+//        this.setNext(help.getNext());
+//        System.out.println("Bitte funktioniere");
+//        System.out.println(this);
+//        System.out.println("this: " + this);
+
+        //Implementationsidee 2: Rückgriff auf containsAdaptive: Per Schleife so lange ausführen, bis Element vorne
+
+        while (this.getValue() != value) { //Funktionsfähig, @TODO: Schönere Implementation? Jedoch erlaubt
+            this.containsAdaptive(value);
         }
-        return this.getNext().containsTopPriority(value);
+        return true;
     }
 
     //Nicht in der HA gefordert - nur zur Vereinfachung
 
     public String toString() {
+        if(this == null) {
+            return "null";
+        }
         if (this.isLast()) {
             return this.getValue() + ". ";
         }
