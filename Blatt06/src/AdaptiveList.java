@@ -104,7 +104,6 @@ public class AdaptiveList {
         if (!contains(value)) { //Wenn das Element gar nicht erst in der Liste enthalten ist, muss nicht weiter geprüft werden
             return false;
         }
-        //@TODO: Element nach ganz vorne bewegen
         //Implementationsidee 1: Value überschreibt erstes Element, der Rest wird über eine Hilfsmethode angehängt
 //        AdaptiveList help = this;
 //        help = help.prepend(value);
