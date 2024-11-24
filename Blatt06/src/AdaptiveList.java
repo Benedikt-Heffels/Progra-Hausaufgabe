@@ -124,14 +124,8 @@ public class AdaptiveList {
 
     public boolean containsAdaptive(int value) {
         //Methode funktioniert für alle getesteten Fälle erfolgreich
-        if (this.isLast()) {
+        if (this.isLast() && this.getValue() != value) {
             return false; //Wenn es sich um das letzte Element handelt, gebe false zurück (sonst gäbe es Fehler bei den weiteren Prüfungen)
-        }
-        else if (this.getNext().getNext().getValue() == value) { //Prüft den Wert des übernächsten Blattes
-            AdaptiveList help = new AdaptiveList(value, this.getNext()); //Überführe den Wert in ein Hilfs-ELement
-            this.getNext().setNext(this.getNext().getNext().getNext()); //Für das nächste ELement wird das folgende Element als das über-übernächste ELement definiert (Ein Element wird übersprungen)
-            this.setNext(help); //Definiere nächstes Element als das Hilfs-Element
-            return true; //Gebe zurück, das Element enthalten ist.
         }
         else if (this.getNext().getValue() == value) { //Unabgedeckter Wert: Nächstes Element ist bereits das gesuchte Element (nur im ersten Aufruf möglich
             //Vorgehen: Erzeugen eines Hilfselements des aktuellen Elements, für aktuelles Element gesuchten Wert setzen und Wert des nächsten Elements durch Wert des Hilfselements ersetzen
@@ -149,19 +143,6 @@ public class AdaptiveList {
         if (!contains(value)) { //Wenn das Element gar nicht erst in der Liste enthalten ist, muss nicht weiter geprüft werden
             return false;
         }
-        //Implementationsidee 1: Value überschreibt erstes Element, der Rest wird über eine Hilfsmethode angehängt
-//        AdaptiveList help = this;
-//        help = help.prepend(value);
-//        System.out.println("help: " + help);
-//        this.setValue(value);
-//        System.out.println(this);
-//        this.setNext(help.getNext());
-//        System.out.println("Bitte funktioniere");
-//        System.out.println(this);
-//        System.out.println("this: " + this);
-
-        //Implementationsidee 2: Rückgriff auf containsAdaptive: Per Schleife so lange ausführen, bis Element vorne
-
         while (this.getValue() != value) { //Funktionsfähig, @TODO: Schönere Implementation? Jedoch erlaubt
             this.containsAdaptive(value);
         }
