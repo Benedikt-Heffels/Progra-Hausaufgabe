@@ -79,53 +79,10 @@ public class AdaptiveList {
         return this.getNext().contains(value); //Sonst wiederhole die Methode mit dem nächsten Blatt.
     }
 
-
-    public boolean containsAdaptivePhil(int value){
-        if(this.isLast()){
-            return this.getValue() == value;
-        }
-        if(this.getNext().getValue() == value){
-            int temp = this.getValue();
-            this.setValue(this.getNext().getValue());
-            this.getNext().setValue(temp);
-            return true;
-        }
-        return this.getNext().containsAdaptivePhil(value);
-    }
-
-
-    public boolean containsTopPriorityPhil(int value){
-        AdaptiveList list = this;
-        AdaptiveList elem = this;
-        boolean res = false;
-        if(elem.getValue() == value){
-            return true;
-        }
-        while(!elem.isLast()){
-            if(elem.getNext().getValue() == value){
-                elem.setNext(elem.getNext().getNext());
-                res = true;
-                break;
-            }
-            else{
-                elem = elem.getNext();
-            }
-        }
-        if(res){
-            AdaptiveList rest = list.getNext();
-            int temp = this.getValue();
-            this.setValue(value);
-            this.setNext(null);
-            this.append(temp);
-            this.getNext().setNext(rest);
-        }
-        return res;
-    }
-
     public boolean containsAdaptive(int value) {
         //Methode funktioniert für alle getesteten Fälle erfolgreich
-        if (this.isLast() && this.getValue() != value) {
-            return false; //Wenn es sich um das letzte Element handelt, gebe false zurück (sonst gäbe es Fehler bei den weiteren Prüfungen)
+        if (this.isLast()) {
+            return this.getValue() != value; //Wenn es sich um das letzte Element handelt, prüfe, ob der Wert stimmt, sonst gebe false zurück
         }
         else if (this.getNext().getValue() == value) { //Unabgedeckter Wert: Nächstes Element ist bereits das gesuchte Element (nur im ersten Aufruf möglich
             //Vorgehen: Erzeugen eines Hilfselements des aktuellen Elements, für aktuelles Element gesuchten Wert setzen und Wert des nächsten Elements durch Wert des Hilfselements ersetzen
@@ -143,7 +100,7 @@ public class AdaptiveList {
         if (!contains(value)) { //Wenn das Element gar nicht erst in der Liste enthalten ist, muss nicht weiter geprüft werden
             return false;
         }
-        while (this.getValue() != value) { //Funktionsfähig, @TODO: Schönere Implementation? Jedoch erlaubt
+        while (this.getValue() != value) { //Funktionsfähig
             this.containsAdaptive(value);
         }
         return true;
