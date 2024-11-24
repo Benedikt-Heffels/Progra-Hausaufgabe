@@ -46,7 +46,7 @@ public class AdaptiveList {
 
     public AdaptiveList prepend(int value) {
         return new AdaptiveList(value, this); //gibt ein neues AdaptiveList Element zurück, dessen value der übergebene value ist. Next ist this als aufrufendes Element (erstes Element der alten Liste), sodass die neue AdaptiveList am Anfang der Liste steht
-        /*Das reutrn-Statement gibt die ganze Liste zurück, mit dem neuen Element als erstem Element. Das geschiet über next = this. (testes)
+        /*Das return-Statement gibt die ganze Liste zurück, mit dem neuen Element als erstem Element. Das geschiet über next = this. (testes)
         */
     }
 
