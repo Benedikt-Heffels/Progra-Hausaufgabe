@@ -65,6 +65,8 @@ public class AdaptiveList {
          */
     }
 
+    //public, weil Zugriff von außerhalb der Klasse sinnvoll und erwünscht.
+    //non-static, weil die Methode auf das Objekt (die Liste) zugreift, auf dem sie aufgerufen wurde.
     public boolean contains(int value) {
         //Methode funktioniert
         //Methode soll zurückgeben, ob ein Wert value in einer Liste enthalten ist
@@ -75,6 +77,49 @@ public class AdaptiveList {
             return true; //Falls das aktuelle Blatt diesen Wert hat, gebe true zurück / Mehrere Elemente mit selbenm Wert soll nicht betrachtet werden
         }
         return this.getNext().contains(value); //Sonst wiederhole die Methode mit dem nächsten Blatt.
+    }
+
+
+    public boolean containsAdaptivePhil(int value){
+        if(this.isLast()){
+            return this.getValue() == value;
+        }
+        if(this.getNext().getValue() == value){
+            int temp = this.getValue();
+            this.setValue(this.getNext().getValue());
+            this.getNext().setValue(temp);
+            return true;
+        }
+        return this.getNext().containsAdaptivePhil(value);
+    }
+
+
+    public boolean containsTopPriorityPhil(int value){
+        AdaptiveList list = this;
+        AdaptiveList elem = this;
+        boolean res = false;
+        if(elem.getValue() == value){
+            return true;
+        }
+        while(!elem.isLast()){
+            if(elem.getNext().getValue() == value){
+                elem.setNext(elem.getNext().getNext());
+                res = true;
+                break;
+            }
+            else{
+                elem = elem.getNext();
+            }
+        }
+        if(res){
+            AdaptiveList rest = list.getNext();
+            int temp = this.getValue();
+            this.setValue(value);
+            this.setNext(null);
+            this.append(temp);
+            this.getNext().setNext(rest);
+        }
+        return res;
     }
 
     public boolean containsAdaptive(int value) {
