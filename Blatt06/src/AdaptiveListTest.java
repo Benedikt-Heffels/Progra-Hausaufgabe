@@ -12,7 +12,7 @@ class AdaptiveListTest {
         for (int i = 0; i < 10; i++) {
             int value = random();
             System.out.println("before: " + list.toString() + "\n value: " + value + (list.contains(value) ? "(contained)" : "(not contained)"));
-            System.out.println((list.containsAdaptivePhil(value)) ? "true" : "false");
+            System.out.println((list.containsAdaptive(value)) ? "true" : "false");
             System.out.println("after: " + list.toString());
         }
 
@@ -24,7 +24,7 @@ class AdaptiveListTest {
         for (int i = 0; i < 50; i++) {
             int value = random();
             System.out.println("before: " + list.toString() + "\n value: " + value + (list.contains(value) ? "(contained)" : "(not contained)"));
-            System.out.println((list.containsTopPriorityPhil(value)) ? "true" : "false");
+            System.out.println((list.containsTopPriority(value)) ? "true" : "false");
             System.out.println("after: " + list.toString());
         }
     }
