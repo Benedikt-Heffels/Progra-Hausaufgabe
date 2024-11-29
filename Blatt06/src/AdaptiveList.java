@@ -124,7 +124,7 @@ public class AdaptiveList {
 
     public boolean containsAdaptive(int value) {
         //Methode funktioniert für alle getesteten Fälle erfolgreich
-        if (this.isLast() && this.getValue() != value) {
+        if (this.isLast()) {
             return false; //Wenn es sich um das letzte Element handelt, gebe false zurück (sonst gäbe es Fehler bei den weiteren Prüfungen)
         }
         else if (this.getNext().getValue() == value) { //Unabgedeckter Wert: Nächstes Element ist bereits das gesuchte Element (nur im ersten Aufruf möglich
@@ -143,6 +143,19 @@ public class AdaptiveList {
         if (!contains(value)) { //Wenn das Element gar nicht erst in der Liste enthalten ist, muss nicht weiter geprüft werden
             return false;
         }
+        //Implementationsidee 1: Value überschreibt erstes Element, der Rest wird über eine Hilfsmethode angehängt
+//        AdaptiveList help = this;
+//        help = help.prepend(value);
+//        System.out.println("help: " + help);
+//        this.setValue(value);
+//        System.out.println(this);
+//        this.setNext(help.getNext());
+//        System.out.println("Bitte funktioniere");
+//        System.out.println(this);
+//        System.out.println("this: " + this);
+
+        //Implementationsidee 2: Rückgriff auf containsAdaptive: Per Schleife so lange ausführen, bis Element vorne
+
         while (this.getValue() != value) { //Funktionsfähig, @TODO: Schönere Implementation? Jedoch erlaubt
             this.containsAdaptive(value);
         }
