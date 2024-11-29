@@ -3,9 +3,29 @@ package Gartenarbeit;
 public class Feld {
 
 	public static Pflanze auswahl(PflanzenPaar pair) {
-
-        /*TODO*/
-        
+        Pflanze res;
+        switch (pair){
+            case PflanzenPaar(Rosengewaechs r, _) -> {
+                res = r;
+            }
+            case PflanzenPaar(_, Rosengewaechs r) -> {
+                res = r;
+            }
+            case PflanzenPaar(Salbei s, BlauerEisenhut b) -> { //Wenn BlauerEisenhut vorne steht muss er eh immer genommen werden -> hier einziger Edge Case
+                res = s.laenge >= 5 ? b : s;
+            }
+            default -> res = pair.p1();
+        }
+        if(res instanceof Rosengewaechs r) {
+            while (r.laenge < r.maxLaenge) {
+                r.waessern();
+            }
+            if (r instanceof Himbeere h) {
+                h.schneiden(1);
+            }
+            return r;
+        }
+        return res;
 	}
 	
 	public static void main(String[] args) {
