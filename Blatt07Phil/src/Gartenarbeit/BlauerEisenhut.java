@@ -16,7 +16,7 @@ public final class BlauerEisenhut extends Pflanze {
 
 	@Override
 	public void schneiden(int x){
-		laenge = 1;
+		laenge = laenge == 0 ? 0 : 1;
 	}
 
 }

@@ -41,7 +41,9 @@ public class Feld {
         salbeiLang.waessern();
 		Salbei salbei = new Salbei();
 		BlauerEisenhut blauerEisenhut = new BlauerEisenhut();
+        System.out.println(blauerEisenhut.getLaenge());
         blauerEisenhut.schneiden(1);
+        System.out.println(blauerEisenhut.getLaenge());
 
         PflanzenPaar pair1 = new PflanzenPaar(himbeere, salbei);
         PflanzenPaar pair2 = new PflanzenPaar(salbei, lorbeerkirsche);
