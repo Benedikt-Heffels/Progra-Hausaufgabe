@@ -1,5 +1,4 @@
-public final class Entry<K,V> {//K: generischer Typparameter für den Schlüssel; V: generischer Typparameter für den Wert
-    //@TODO Added Comments
+public final class Entry<K,V> {//K: generischer Typparameter fuer den Schluessel; V: generischer Typparameter fuer den Wert
     //Attribute
     private K key;
     private V value;

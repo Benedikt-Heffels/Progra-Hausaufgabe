@@ -2,7 +2,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public final class ArrayMap<K, V> extends AbstractMap<K, V> {
-    //@TODO changed a few comments
     //Attribute
     private Entry<K, V>[] entries;
 
@@ -17,9 +16,8 @@ public final class ArrayMap<K, V> extends AbstractMap<K, V> {
     //Implementierung der abstrakten Methoden aus AbstractMap
     @Override
     public V getOrThrow(K key) throws UnknownKeyException {
-        //@TODO: Changed if-Statement, new comment
         for (Entry<K, V> entry : this.entries) {
-            if (entry != null && entry.getKey().equals(key)) { //Wenn der key des Eintrags gleich dem uebergebenen key ist, soll der Wert zurueck gegeben werden. Dafür muss zunaechst ueberprueft werden, dass der Eintrag nicht gleich null ist, weil sonst eine unchecked Exception auftritt (NullPointer).
+            if (entry != null && entry.getKey().equals(key)) { //Wenn der key des Eintrags gleich dem uebergebenen key ist, soll der Wert zurueck gegeben werden. Dafuer muss zunaechst ueberprueft werden, dass der Eintrag nicht gleich null ist, weil sonst eine unchecked Exception auftritt (NullPointer).
                 return entry.getValue();
             }
         }
@@ -34,12 +32,11 @@ public final class ArrayMap<K, V> extends AbstractMap<K, V> {
             }
         }
         int nextNullIndex = this.entries.length;
-        this.entries = GenericArrayHelper.copyArrayWithIncreasedSize(this.entries, this.entries.length * 2); //Falls es keine leere Position gibt und der key nicht passt, wird die Map kopiert und dabei von der groeße her verdoppelt
+        this.entries = GenericArrayHelper.copyArrayWithIncreasedSize(this.entries, this.entries.length * 2); //Falls es keine leere Position gibt und der key nicht passt, wird die Map kopiert und dabei von der groesse her verdoppelt
         this.entries[nextNullIndex] = new Entry<K,V>(key, value); //nextNullIndes ist die alte laenge der Map. Da diese jetzt vergroessert wurde, ist das die erste Position, an der die Map den Wert null hat (dabei zu beachten: Array-Positionen werden ab 0 benannt, gezaehlt jedoch ab 1)
     }
     @Override
     public Set<K> keysAsSet(){ //Es soll ein HashSet mit den keys erstellt werden
-        //@TODO Changed variable name, if-statement
         HashSet<K> kSet = new HashSet<>();
         for(Entry<K, V> entry : this.entries){
             if(entry != null) {

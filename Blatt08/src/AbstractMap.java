@@ -10,8 +10,7 @@ public abstract class AbstractMap<K, V> {
 
     //implemented methods
     public Set<V> getValuesAsSetOrThrow(Set<K> keys) throws UnknownKeyException {
-        //@TODO Some changend commmentars
-        HashSet<V> vSet = new HashSet<V>();//Erstellen eines HashSets zum Speichern der Ergebnis-Werte (mit Typparameter V) @TODO Changed Variablename
+        HashSet<V> vSet = new HashSet<V>();//Erstellen eines HashSets zum Speichern der Ergebnis-Werte (mit Typparameter V)
         for (K key : keys) {//geht durch alle Keys des uebergebenen keySet
             vSet.add(this.getOrThrow(key));//fuegt den Wert zum Key zum vSet hinzu, oder wirft eine Exception
         }
